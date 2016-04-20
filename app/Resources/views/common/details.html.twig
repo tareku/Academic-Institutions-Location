@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="row margin-top-50">
+
+        <h2 class="page-header">{{estab.name}}</h2>
+        <div class="col-md-6">
+            <ul>
+                <li class="list-group-item" ng-init="name = '{{estab.name}}'">
+                    <strong>Type:</strong>
+                    {{estab.type}}</li>
+                <li class="list-group-item" ng-init="lat = '{{estab.latitude}}'">
+                    <strong>Latitude:</strong>
+                    {{estab.latitude}}</li>
+                <li class="list-group-item" ng-init="long = '{{estab.longitude}}'">
+                    <strong>Longitude:</strong>
+                    {{estab.longitude}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <div my-map=""></div>
+        </div>
+    </div>
+
+{% endblock %}

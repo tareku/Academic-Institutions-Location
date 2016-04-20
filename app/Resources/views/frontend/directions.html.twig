@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="row margin-top-50" ng-app="ngMap">
+        <h2 class="page-header">Directions</h2>
+        <div class="">
+          <b>Origin
+          </b>
+            <select ng-model="origin">
+                {% for estab in estabs %}
+                    <option value="{{estab.name}}">{{estab.name}}</option>
+                {% endfor %}
+            </select>
+
+            <b>Destionation
+            </b>
+            <select ng-model="destination">
+              {% for estab in estabs %}
+                  <option value="{{estab.name}}">{{estab.name}}</option>
+              {% endfor %}
+            </select>
+
+            <b>Mode of Travel:
+            </b>
+            <select ng-model="travelMode" ng-init="travelMode='DRIVING'">
+                <option value="DRIVING">Driving</option>
+                <option value="WALKING">Walking</option>
+                <option value="BICYCLING">Bicycling</option>
+                <option value="TRANSIT">Transit</option>
+            </select>
+        </div>
+
+        <div style="width: 68%; float:left; height: 100%">
+
+            {% verbatim %}
+                <ng-map zoom="5" center="35.5, 10" style="height:90%" on-click="logLatLng()">
+                    <directions draggable="true" panel="directions-panel" travel-mode="{{travelMode}}" origin="{{origin}}" destination="{{destination}}"></directions>
+                </ng-map>
+            {% endverbatim %}
+        </div>
+
+        <div id="directions-panel" style="width: 28%; float:left; height: 100%; overflow: auto; padding: 0px 5px"></div>
+
+        <script>
+            angular.module('ngMap').run(function($rootScope) {
+                $rootScope.logLatLng = function(e) {
+                    console.log('loc', e.latLng);
+                }
+            });
+        </script>
+    </div>
+
+{% endblock %}

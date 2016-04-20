@@ -1,0 +1,30 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+
+
+{% if error %}
+    <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+<div class="margin-top-150">
+  <form action="{{ path("fos_user_security_check") }}" method="post">
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    <h2 class="form-signin-heading col-md-offset-5">Sign in</h2>
+    <label for="username" class="sr-only">{{ 'security.login.username'|trans }}</label>
+    <input type="email" id="username" name="_username" required="required"  class="input-lg form-control" placeholder="Email address" autofocus>
+
+    <label for="password" class="sr-only">{{ 'security.login.password'|trans }}</label>
+    <input type="password" id="password" name="_password" required="required" class="input-lg form-control" placeholder="Password"/>
+
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="remember_me" name="_remember_me" value="on"/> {{ 'security.login.remember_me'|trans }}
+      </label>
+    </div>
+    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-lg btn-primary btn-block" />
+    <a href="/register" class="btn btn-lg btn-success btn-block" type="submit">Sign-up</a>
+  </form>
+</div>
+{% endblock fos_user_content %}

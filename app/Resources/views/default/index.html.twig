@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}  
+{% block body %}
     <div class="row">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <div class="col-md-12 margin-top-50">
@@ -9,7 +9,6 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Name</th>
                             <th>Type</th>
                             <th></th>
@@ -18,8 +17,7 @@
                     <tbody>
                         <tr></tr>
                         {% for estab in estabs %}
-                            <tr>
-                                <td>{{estab.id}}</td>
+                            <tr>                                
                                 <td>{{estab.name}}</td>
                                 <td>{{estab.type}}</td>
                                 <td>

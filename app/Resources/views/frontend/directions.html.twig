@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="row margin-top-50" ng-app="ngMap">
+    <div class="row margin-top-50">
         <h2 class="page-header">Directions</h2>
         <div class="">
           <b>Origin
@@ -41,11 +41,11 @@
         <div id="directions-panel" style="width: 28%; float:left; height: 100%; overflow: auto; padding: 0px 5px"></div>
 
         <script>
-            angular.module('ngMap').run(function($rootScope) {
-                $rootScope.logLatLng = function(e) {
-                    console.log('loc', e.latLng);
-                }
-            });
+            // angular.module('ngMap').run(function($rootScope) {
+            //     $rootScope.logLatLng = function(e) {
+            //         console.log('loc', e.latLng);
+            //     }
+            // });
         </script>
     </div>
 

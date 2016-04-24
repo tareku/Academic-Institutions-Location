@@ -37,12 +37,12 @@ class DefaultController extends Controller
            {
                $estab = new Institution;
 
-               $form = $this->createFormBuilder($estab)
-                 ->add('name', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-                 ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'), 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-                 ->add('address', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
+               $form = $this->createFormBuilder($estab,  array("action" => $this->generateUrl("createpage")))
+                 ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg', 'style' => 'margin-bottom:15px')))
+                 ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg', 'style' => 'margin-bottom:15px')))
+                 ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg', 'style' => 'margin-bottom:15px','on-place-changed' => 'vm.placeChanged()', 'places-auto-complete' => 'places-auto-complete')))
                  ->add('save', SubmitType::class, array('label' => 'Add Institution', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:15px')))
-                 ->getForm();
+                 ->getForm();                
 
                  $form->handleRequest($request);
 

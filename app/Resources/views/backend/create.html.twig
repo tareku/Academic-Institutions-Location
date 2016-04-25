@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="row margin-top-50" ng-controller="MyCtrl as vm">
-        <h2 class="page-header">Add an Establishment</h2>
+    <div class="row margin-top-50" ng-controller="MapCtrl as vm">
+        <h2 class="page-header">Add Institution</h2>
         <div class="col-md-6">
             {{ form_start(form, {'method': 'POST'}) }}
-            {{ form_widget(form) }}
+            <div class="" ng-hide="true">
+              {{ form_widget(form.Latitude) }}
+              {{ form_widget(form.Longitude) }}
+            </div>
             {{ form_end(form, {'render_rest': true}) }}
         </div>
         <div class="col-md-6">
@@ -13,21 +16,10 @@
               {{vm.lat | number:7}}
               {{vm.lng | number:7}}
           </div>
-            <ng-map zoom="7" center="35.1107846,9.4297074" class="height-500">
+            <ng-map zoom="{{vm.zoom}}" center="{{vm.clat}},{{vm.clng}}" class="height-500">
               <marker position="[{{vm.lat}},{{vm.lng}}]" animation="Animation.BOUNCE"></marker>
             </ng-map>
             {% endverbatim %}
         </div>
     </div>
-    <script>
-        angular.module('myApp', ['ngMap'])
-        .controller('MyCtrl', function(NgMap) {
-            var vm = this;
-            vm.placeChanged = function() {
-                vm.place = this.getPlace();
-                vm.lat = vm.place.geometry.location.lat();
-                vm.lng = vm.place.geometry.location.lng();
-            }
-        });
-    </script>
 {% endblock %}

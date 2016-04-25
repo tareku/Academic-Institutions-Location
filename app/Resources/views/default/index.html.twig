@@ -1,11 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row">
+    <div class="row" ng-controller="MapCtrl as vm">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <div class="col-md-12 margin-top-50">
+            <div class="col-md-12 margin-top-100">
+                {% verbatim %}
+                    <ng-map zoom="{{vm.zoom}}" center="[{{vm.clat}},{{vm.clng}}]" class="height-550">
+                    {% endverbatim %}
+                    {% for estab in estabs %}
+                        <marker position="[{{estab.latitude}},{{estab.longitude}}]" title="{{estab.name}}" animation="Animation.BOUNCE"></marker>
+                    {% endfor %}
+                    {% verbatim %}
+                    </ng-map>
+                {% endverbatim %}
                 <h2 class="page-header">Establishments list</h2>
-                <span ng-init="estabs = {{ estabs|json_encode|raw }}"></span>
                 <table class="table">
                     <thead>
                         <tr>
@@ -17,7 +25,7 @@
                     <tbody>
                         <tr></tr>
                         {% for estab in estabs %}
-                            <tr>                                
+                            <tr>
                                 <td>{{estab.name}}</td>
                                 <td>{{estab.type}}</td>
                                 <td>

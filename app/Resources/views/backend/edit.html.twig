@@ -1,9 +1,22 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="margin-top-100">
-        <h2 class="page-header">Edit Establishment</h2>
-        {{ form_start(form, {'method': 'POST'}) }}
-        {{ form_widget(form) }}
-        {{ form_end(form, {'render_rest': true}) }}
+    <div class="row margin-top-50" ng-controller="MapCtrl as vm">
+        <h2 class="page-header">Edit Institution</h2>
+        <div class="col-md-6">
+            {{ form_start(form, {'method': 'POST'}) }}
+            {{ form_widget(form) }}
+            {{ form_end(form, {'render_rest': true}) }}
+        </div>
+        <div class="col-md-6">
+            {% verbatim %}
+                <div ng-show="false">
+                    {{vm.lat | number:7}}
+                    {{vm.lng | number:7}}
+                </div>
+                <ng-map zoom="{{vm.zoom}}" center="{{vm.clat}},{{vm.clng}}" class="height-500">
+                    <marker position="[{{vm.lat}},{{vm.lng}}]" animation="Animation.BOUNCE"></marker>
+                </ng-map>
+            {% endverbatim %}
+        </div>
     </div>
 {% endblock %}

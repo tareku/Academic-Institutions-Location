@@ -38,11 +38,13 @@ class DefaultController extends Controller
                $estab = new Institution;
 
                $form = $this->createFormBuilder($estab,  array("action" => $this->generateUrl("createpage")))
-                 ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg', 'style' => 'margin-bottom:15px')))
-                 ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg', 'style' => 'margin-bottom:15px')))
-                 ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg', 'style' => 'margin-bottom:15px','on-place-changed' => 'vm.placeChanged()', 'places-auto-complete' => 'places-auto-complete')))
-                 ->add('save', SubmitType::class, array('label' => 'Add Institution', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:15px')))
-                 ->getForm();                
+                 ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'placeholder' => 'Institution name')))
+                 ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
+                 ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'on-place-changed' => 'vm.placeChanged()', 'places-auto-complete' => 'places-auto-complete')))
+                 ->add('Latitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'placeholder' => 'Latitude', 'value' => '{{vm.lat}}')))
+                 ->add('Longitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'placeholder' => 'Longitude', 'value' => '{{vm.lng}}')))
+                 ->add('save', SubmitType::class, array('label' => 'Add Institution', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
+                 ->getForm();
 
                  $form->handleRequest($request);
 
@@ -74,7 +76,7 @@ class DefaultController extends Controller
            }
 
            /**
-     * @Route("/backend/edit/{id}", name="todo_edit")
+     * @Route("/backend/edit/{id}", name="editpage")
      */
     public function editAction($id, Request $request)
     {
@@ -86,11 +88,11 @@ class DefaultController extends Controller
           $estab->setType($estab->getType());
           $estab->setAddress($estab->getAddress());
 
-          $form = $this->createFormBuilder($estab)
-            ->add('name', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-            ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'), 'attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-            ->add('address', TextType::class, array('attr' => array('class' => 'form-control', 'style' => 'margin-bottom:15px')))
-            ->add('save', SubmitType::class, array('label' => 'Edit Establishment', 'attr' => array('class' => 'btn btn-primary', 'style' => 'margin-bottom:15px')))
+          $form = $this->createFormBuilder($estab,  array("action" => $this->generateUrl("editpage", array('id' => 'id'))))
+            ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'placeholder' => 'Institution name')))
+            ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
+            ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'on-place-changed' => 'vm.placeChanged()', 'places-auto-complete' => 'places-auto-complete')))
+            ->add('save', SubmitType::class, array('label' => 'Edit Institution', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
             ->getForm();
 
             $form->handleRequest($request);
@@ -157,15 +159,15 @@ class DefaultController extends Controller
     }
 
     /**
-   * @Route("/frontend/directions", name="directionspage")
+   * @Route("/common/directions", name="directionspage")
    */
   public function directionAction()
   {
     $estabs = $this->getDoctrine()
-      ->getRepository('AppBundle:Establishment')
+      ->getRepository('AppBundle:Institution')
       ->findAll();
 
-    return $this->render('frontend/directions.html.twig', array(
+    return $this->render('common/directions.html.twig', array(
       'estabs' => $estabs,
     ));
   }

@@ -24,7 +24,7 @@ class Gallery
     /**
      * @var int
      *
-     * @ORM\Column(name="establishment", type="bigint")
+     * @ORM\Column(name="establishment", type="integer")
      */
     private $establishment;
 
@@ -94,4 +94,3 @@ class Gallery
         return $this->url;
     }
 }
-

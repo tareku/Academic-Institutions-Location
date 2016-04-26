@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 use AppBundle\Entity\Institution;
 use AppBundle\Entity\Establishment;
+use AppBundle\Entity\Gallery;
+use AppBundle\Entity\Historique;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,6 +28,19 @@ class DefaultController extends Controller
         ->findAll();
 
       return $this->render('default/index.html.twig', array(
+        'estabs' => $estabs,
+      ));
+    }
+    /**
+     * @Route("/common/list", name="listpage")
+     */
+    public function listAction(Request $request)
+    {
+      $estabs = $this->getDoctrine()
+        ->getRepository('AppBundle:Institution')
+        ->findAll();
+
+      return $this->render('common/list.html.twig', array(
         'estabs' => $estabs,
       ));
     }
@@ -76,53 +91,52 @@ class DefaultController extends Controller
            }
 
            /**
-     * @Route("/backend/edit/{id}", name="editpage")
-     */
-    public function editAction($id, Request $request)
-    {
-        $estab = $this->getDoctrine()
-          ->getRepository('AppBundle:Institution')
-          ->find($id);
+            * @Route("/backend/edit/{id}", name="editpage")
+            */
+           public function editAction($id, Request $request)
+           {
+               $estab = $this->getDoctrine()
+                 ->getRepository('AppBundle:Institution')
+                 ->find($id);
 
-          $estab->setName($estab->getName());
-          $estab->setType($estab->getType());
-          $estab->setAddress($estab->getAddress());
+                 $estab->setName($estab->getName());
+                 $estab->setType($estab->getType());
+                 $estab->setAddress($estab->getAddress());
 
-          $form = $this->createFormBuilder($estab,  array("action" => $this->generateUrl("editpage", array('id' => 'id'))))
-            ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'placeholder' => 'Institution name')))
-            ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
-            ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'on-place-changed' => 'vm.placeChanged()', 'places-auto-complete' => 'places-auto-complete')))
-            ->add('save', SubmitType::class, array('label' => 'Edit Institution', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
-            ->getForm();
+                 $form = $this->createFormBuilder($estab,  array("action" => $this->generateUrl("editpage", array('id' => 'id'))))
+                   ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Institution name')))
+                   ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
+                   ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'on-place-changed' => 'vm.placeChanged()', 'places-auto-complete' => 'places-auto-complete')))
+                   ->add('Latitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Latitude', 'value' => '{{vm.lat}}')))
+                   ->add('Longitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Longitude', 'value' => '{{vm.lng}}')))
+                   ->add('save', SubmitType::class, array('label' => 'Edit Institution', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
+                   ->getForm();
 
-            $form->handleRequest($request);
+                   $form->handleRequest($request);
+                   if($form->isSubmitted() && $form->isValid()){
+                     //create data
+                     $name = $form['name']->getData();
+                     $type = $form['type']->getData();
+                     $address = $form['address']->getData();
 
-            if($form->isSubmitted() && $form->isValid()){
-              //create data
-              $name = $form['name']->getData();
-              $type = $form['type']->getData();
-              $address = $form['address']->getData();
+                     $em = $this->getDoctrine()->getManager();
+                     $estab = $em->getRepository('AppBundle:Institution')->find($id);
 
-              $em = $this->getDoctrine()->getManager();
-              $estab = $em->getRepository('AppBundle:Institution')->find($id);
-
-              $estab->setName($name);
-              $estab->setType($type);
-              $estab->setAddress($address);
-
-              $em->flush();
-
-              $this->addFlash(
-                'notice',
-                'Institution Edited'
-              );
-              return $this->redirectToRoute('homepage');
-            }
-          return $this->render('backend/edit.html.twig', array(
-            'estab' => $estab,
-            'form' => $form->createView()
-          ));
-    }
+                     $estab->setName($name);
+                     $estab->setType($type);
+                     $estab->setAddress($address);
+                     $em->flush();
+                     $this->addFlash(
+                       'notice',
+                       'Institution Edited'
+                     );
+                     return $this->redirectToRoute('homepage');
+                   }
+                 return $this->render('backend/edit.html.twig', array(
+                   'estab' => $estab,
+                   'form' => $form->createView()
+                 ));
+           }
 
 
                /**

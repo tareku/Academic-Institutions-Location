@@ -13,33 +13,7 @@
                     {% verbatim %}
                     </ng-map>
                 {% endverbatim %}
-                <h2 class="page-header">Establishments list</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr></tr>
-                        {% for estab in estabs %}
-                            <tr>
-                                <td>{{estab.name}}</td>
-                                <td>{{estab.type}}</td>
-                                <td>
-                                    <a href="/common/details/{{estab.id}}" class="btn btn-success">View</a>
-                                    {% if app.user.username == "Tarek Brahim" %}
-                                        <a href="/backend/edit/{{estab.id}}" class="btn btn-default">Edit</a>
-                                        <a href="/backend/delete/{{estab.id}}" class="btn btn-danger">Delete</a>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            {% else %}
+                {% else %}
                 <div class="margin-top-100">
                     <div class="col-md-6 col-md-offset-3">
                         <h2 class="header-page">

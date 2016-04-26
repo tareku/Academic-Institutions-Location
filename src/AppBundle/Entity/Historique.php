@@ -24,14 +24,14 @@ class Historique
     /**
      * @var int
      *
-     * @ORM\Column(name="user", type="bigint")
+     * @ORM\Column(name="user", type="integer")
      */
     private $user;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="establishment", type="bigint")
+     * @ORM\Column(name="establishment", type="integer")
      */
     private $establishment;
 
@@ -125,4 +125,3 @@ class Historique
         return $this->date;
     }
 }
-

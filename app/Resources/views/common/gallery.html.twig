@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="row margin-top-50">
+        <h2 class="page-header">{{estab.name}}</h2>
+        {{ form_start(form, {'method': 'POST'}) }}
+        {{ form_widget(form) }}
+        {{ form_end(form, {'render_rest': true}) }}
+    </div>
+
+{% endblock %}

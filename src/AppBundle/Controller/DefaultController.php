@@ -139,6 +139,53 @@ class DefaultController extends Controller
            }
 
 
+           /**
+            * @Route("/backend/update/{id}", name="updatepage")
+            */
+           public function updateAction($id, Request $request)
+           {
+               $estab = $this->getDoctrine()
+                 ->getRepository('AppBundle:Institution')
+                 ->find($id);
+
+                 $estab->setName($estab->getName());
+                 $estab->setType($estab->getType());
+                 $estab->setAddress($estab->getAddress());
+
+                 $form = $this->createFormBuilder($estab)
+                   ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Institution name')))
+                   ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
+                   ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10')))
+                   ->add('save', SubmitType::class, array('label' => 'Edit Institution', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
+                   ->getForm();
+
+                   $form->handleRequest($request);
+                   if($form->isSubmitted() && $form->isValid()){
+                     //create data
+                     $name = $form['name']->getData();
+                     $type = $form['type']->getData();
+                     $address = $form['address']->getData();
+
+                     $em = $this->getDoctrine()->getManager();
+                     $estab = $em->getRepository('AppBundle:Institution')->find($id);
+
+                     $estab->setName($name);
+                     $estab->setType($type);
+                     $estab->setAddress($address);
+                     $em->flush();
+                     $this->addFlash(
+                       'notice',
+                       'Institution Edited'
+                     );
+                     return $this->redirectToRoute('homepage');
+                   }
+                 return $this->render('backend/update.html.twig', array(
+                   'estab' => $estab,
+                   'form' => $form->createView()
+                 ));
+           }
+
+
                /**
                 * @Route("/backend/delete/{id}", name="deletepage")
                 */

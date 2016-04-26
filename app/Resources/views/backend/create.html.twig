@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="row margin-top-50" ng-controller="MapCtrl as vm">
+    <div class="row margin-top-50" ng-app="app" ng-controller="MapCtrl as vm">
         <h2 class="page-header">Add Institution</h2>
         <div class="col-md-6">
             {{ form_start(form, {'method': 'POST'}) }}

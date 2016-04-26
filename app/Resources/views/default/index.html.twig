@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row" ng-controller="MapCtrl as vm">
+    <div class="row" ng-app="app" ng-controller="MapCtrl as vm">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <div class="col-md-12 margin-top-100">
                 {% verbatim %}

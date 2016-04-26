@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="row margin-top-50" >
+        <h2 class="page-header">Update Institution</h2>
+        <div class="col-md-6">
+            {{ form_start(form, {'method': 'POST'}) }}
+            {{ form_widget(form) }}
+            {{ form_end(form, {'render_rest': true}) }}
+        </div>
+    </div>
+{% endblock %}

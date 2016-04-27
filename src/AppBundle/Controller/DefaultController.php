@@ -177,7 +177,7 @@ class DefaultController extends Controller
                        'notice',
                        'Institution Edited'
                      );
-                     return $this->redirectToRoute('homepage');
+                     return $this->redirectToRoute('listpage');
                    }
                  return $this->render('backend/update.html.twig', array(
                    'estab' => $estab,

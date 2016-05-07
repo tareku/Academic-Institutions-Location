@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="row margin-top-50" ng-controller="MapCtrl as vm">
+    <div class="row margin-top-50" >
         <h2 class="page-header">Edit Institution</h2>
         <div class="col-md-6">
-            {{ form_start(form, {'method': 'POST'}) }}
-            {{ form_widget(form) }}
-            {{ form_end(form, {'render_rest': true}) }}            
+            <div class="">
+              {{ form_start(form, {'method': 'POST'}) }}
+              {{ form_widget(form) }}
+              {{ form_end(form, {'render_rest': true}) }}
+            </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" ng-app="app" ng-controller="MapCtrl as vm">
             {% verbatim %}
                 <div ng-show="false">
                     {{vm.lat | number:7}}

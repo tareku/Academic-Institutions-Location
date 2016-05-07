@@ -10,9 +10,7 @@
                     {% for estab in estabs %}
                         <marker position="[{{estab.latitude}},{{estab.longitude}}]" title="{{estab.name}}" animation="Animation.BOUNCE"></marker>
                     {% endfor %}
-                    {% verbatim %}
-                    </ng-map>
-                {% endverbatim %}
+                    </ng-map>                    
                 {% else %}
                 <div class="margin-top-100">
                     <div class="col-md-6 col-md-offset-3">
@@ -21,7 +19,7 @@
                         </h2>
                     </div>
                     <div class="col-md-6 col-md-offset-2">
-                        <img src="https://scontent-bru2-1.xx.fbcdn.net/v/t34.0-12/12980369_1137390629638349_2125880167_n.png?oh=4a192b89ffb2697f255f7cae9878fcda&oe=571070A9">
+                        <img src="https://scontent-cdg2-1.xx.fbcdn.net/v/t34.0-12/12980369_1137390629638349_2125880167_n.png?oh=1bf003a94483b4bfd2b7f13c10d27ab5&oe=572C2029">
                     </div>
                 </div>
             {% endif %}

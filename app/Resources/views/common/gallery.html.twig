@@ -2,9 +2,31 @@
 {% block body %}
     <div class="row margin-top-50">
         <h2 class="page-header">{{estab.name}}</h2>
-        {{ form_start(form, {'method': 'POST'}) }}
-        {{ form_widget(form) }}
-        {{ form_end(form, {'render_rest': true}) }}
+        <div class="">
+            {{ form_start(galleryform, {'method': 'POST'}) }}
+            {{ form_widget(galleryform) }}
+            {{ form_end(galleryform, {'render_rest': true}) }}
+        </div>
+        {% verbatim %}
+            <div id="myCarousel" class="carousel slide " data-ride="carousel" data-interval="1000">
+                <div class="carousel-inner" role="listbox">
+                {% endverbatim %}
+                {% for picture in pictures %}
+                    <div {% if loop.index == 1 %} class="item active" {% else %} class="item" {% endif %}>
+                        <img src= {{picture.url}} alt=""/>
+                    </div>
+                {% endfor %}
+                {% verbatim %}
+                </div>
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        {% endverbatim %}
     </div>
-
 {% endblock %}

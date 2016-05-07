@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class DefaultController extends Controller
 {
@@ -99,16 +100,16 @@ class DefaultController extends Controller
                  ->getRepository('AppBundle:Institution')
                  ->find($id);
 
-                 $estab->setName($estab->getName());
-                 $estab->setType($estab->getType());
-                 $estab->setAddress($estab->getAddress());
+                //  $estab->setName($estab->getName());
+                //  $estab->setType($estab->getType());
+                //  $estab->setAddress($estab->getAddress());
 
                  $form = $this->createFormBuilder($estab,  array("action" => $this->generateUrl("editpage", array('id' => 'id'))))
                    ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Institution name')))
                    ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
-                   ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'on-place-changed' => 'vm.placeChanged()', 'places-auto-complete' => 'places-auto-complete')))
-                   ->add('Latitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Latitude', 'value' => '{{vm.lat}}')))
-                   ->add('Longitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Longitude', 'value' => '{{vm.lng}}')))
+                  //  ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'on-place-changed' => 'vm.placeChanged()', 'places-auto-complete' => 'places-auto-complete')))
+                  //  ->add('Latitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Latitude', 'value' => '{{vm.lat}}')))
+                  //  ->add('Longitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Longitude', 'value' => '{{vm.lng}}')))
                    ->add('save', SubmitType::class, array('label' => 'Edit Institution', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
                    ->getForm();
 
@@ -117,20 +118,20 @@ class DefaultController extends Controller
                      //create data
                      $name = $form['name']->getData();
                      $type = $form['type']->getData();
-                     $address = $form['address']->getData();
+                    //  $address = $form['address']->getData();
 
                      $em = $this->getDoctrine()->getManager();
                      $estab = $em->getRepository('AppBundle:Institution')->find($id);
 
                      $estab->setName($name);
                      $estab->setType($type);
-                     $estab->setAddress($address);
+                    //  $estab->setAddress($address);
                      $em->flush();
                      $this->addFlash(
                        'notice',
                        'Institution Edited'
                      );
-                     return $this->redirectToRoute('homepage');
+                     return $this->redirectToRoute('listpage');
                    }
                  return $this->render('backend/edit.html.twig', array(
                    'estab' => $estab,
@@ -148,15 +149,19 @@ class DefaultController extends Controller
                  ->getRepository('AppBundle:Institution')
                  ->find($id);
 
-                 $estab->setName($estab->getName());
-                 $estab->setType($estab->getType());
-                 $estab->setAddress($estab->getAddress());
+                 $gallery = $this->getDoctrine()
+                   ->getRepository('AppBundle:Gallery')
+                   ->find($id);
+
+                //  $estab->setName($estab->getName());
+                //  $estab->setType($estab->getType());
+                //  $estab->setAddress($estab->getAddress());
 
                  $form = $this->createFormBuilder($estab)
                    ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Institution name')))
                    ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
-                   ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10')))
-                   ->add('save', SubmitType::class, array('label' => 'Edit Institution', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
+                  //  ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10')))
+                   ->add('save', SubmitType::class, array('label' => 'Update Institution', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
                    ->getForm();
 
                    $form->handleRequest($request);
@@ -164,14 +169,14 @@ class DefaultController extends Controller
                      //create data
                      $name = $form['name']->getData();
                      $type = $form['type']->getData();
-                     $address = $form['address']->getData();
+                    //  $address = $form['address']->getData();
 
                      $em = $this->getDoctrine()->getManager();
                      $estab = $em->getRepository('AppBundle:Institution')->find($id);
 
                      $estab->setName($name);
                      $estab->setType($type);
-                     $estab->setAddress($address);
+                    //  $estab->setAddress($address);
                      $em->flush();
                      $this->addFlash(
                        'notice',
@@ -179,9 +184,64 @@ class DefaultController extends Controller
                      );
                      return $this->redirectToRoute('listpage');
                    }
+
+
                  return $this->render('backend/update.html.twig', array(
                    'estab' => $estab,
-                   'form' => $form->createView()
+                   'form' => $form->createView(),
+                 ));
+           }
+
+
+           /**
+            * @Route("/common/gallery/{id}", name="gallerypage")
+            */
+           public function galleryAction($id, Request $request)
+           {
+
+             $estab = $this->getDoctrine()
+               ->getRepository('AppBundle:Institution')
+               ->find($id);
+
+             $pictures = $this->getDoctrine()
+               ->getRepository('AppBundle:Gallery')
+               ->findByEstablishment($id);
+
+               $gallery = new Gallery;
+
+                   $galleryform = $this->createFormBuilder($gallery,  array("action" => $this->generateUrl("gallerypage", array('id' => 'id'))))
+                     ->add('Url', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Picture URL')))
+                     ->add('Establishment', HiddenType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Establishment ID', 'value' => $id)))
+                    //  ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
+                    //  ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10')))
+                     ->add('save', SubmitType::class, array('label' => 'Add to gallery', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
+                     ->getForm();
+                   $galleryform->handleRequest($request);
+
+                   if($galleryform->isSubmitted() && $galleryform->isValid()){
+                     //create data
+                     $url = $galleryform['Url']->getData();
+                     $estabid = $galleryform['Establishment']->getData();
+
+                     $gallery->setUrl($url);
+                     $gallery->setEstablishment($estabid);
+
+                     $em = $this->getDoctrine()->getManager();
+                     $em->persist($gallery);
+                     $em->flush();
+
+                     $this->addFlash(
+                       'notice',
+                       'Picture Added'
+                     );
+                     return $this->redirectToRoute('listpage');
+                   }
+
+                 return $this->render('common/gallery.html.twig', array(
+                   'estab' => $estab,
+                   'pictures' => $pictures,
+                   'gallery' => $gallery,
+                   'galleryform' => $galleryform->createView()
                  ));
            }
 

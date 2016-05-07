@@ -1,19 +1,27 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="row margin-top-50" ng-controller="MapCtrl as vm">
+    <div class="row margin-top-50" ng-app="app" ng-controller="MapCtrl as vm">
         <h2 class="page-header">{{estab.name}}</h2>
         <div class="col-md-6">
-            <ul>
-                <li class="list-group-item">
-                    <strong>Type:</strong>
-                    {{estab.type}}</li>
-                <li class="list-group-item">
-                    <strong>Address:</strong>
-                    {{estab.address}}</li>
-                <li class="list-group-item">
-                    <a href="/common/gallery/{{estab.id}}"><strong>Gallery</strong></a></li>
-            </ul>
+            <div class="">
+                <ul>
+                    <li class="list-group-item">
+                        <strong>Type:</strong>
+                        {{estab.type}}</li>
+                    <li class="list-group-item">
+                        <strong>Address:</strong>
+                        {{estab.address}}</li>
+                    <li class="list-group-item">
+                        <a href="/common/gallery/{{estab.id}}">
+                            <strong>Gallery</strong>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="">
+            </div>
         </div>
+
         <div class="col-md-6">
             {% verbatim %}
                 <ng-map zoom="{{vm.zoom}}" center="[{{vm.clat}},{{vm.clng}}]" class="height-500">

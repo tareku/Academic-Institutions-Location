@@ -34,8 +34,7 @@
         </div>
         {% block javascripts %}{% endblock %}
         <script>
-            angular.module('app', ['ngMap'])
-            .controller('MapCtrl', function(NgMap) {
+            angular.module('app', ['ngMap']).controller('MapCtrl', function(NgMap) {
                 var vm = this;
                 vm.zoom = 7;
                 vm.clat = 35.1107846;
@@ -48,8 +47,15 @@
                     vm.clat = vm.lat;
                     vm.clng = vm.lng;
                 }
-            })
-            ;
+            }).controller('ListCtrl', function($scope) {
+                $scope.click = function(items) {
+                    var context = items;
+                    for (var i = 0; i < context.length; i++) {
+                        alert("clicked " + context[i].name);
+                    }
+                    // for (var i = 0; i < items.length; i++) {       alert("clicked "+items[i].name|raw); }
+                }
+            });
         </script>
     </body>
 </html>

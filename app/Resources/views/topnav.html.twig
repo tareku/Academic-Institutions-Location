@@ -1,9 +1,8 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-        <div class="navbar-header">
-
+        <div class="navbar-header">          
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {% if app.user.username == "Tarek Brahim" %}
+                {% if app.user.username == "admin" %}
                     <li>
                         <a class="navbar-brand" href="/">AIL Administration</a>
                     </li>
@@ -21,30 +20,40 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    {% if app.user.username == "Tarek Brahim" %}
+                    {% if app.user.username == "admin" %}
                         <li>
-                            <a href="/backend/create">Add</a>
+                            <a href="/backend/create">
+                              <span class="glyphicon glyphicon-plus"></span>
+                            Add</a>
                         </li>
                     {% else %}
                         <li>
                             <a href="/profile">
+                              <span class="glyphicon glyphicon-user"></span>
                                 {{ 'layout.logged_in_as'|trans({'%username%': app.user.username},
                 'FOSUserBundle') }}
                             </a>
                         </li>
                         <li>
-                            <a href="/profile/edit">Edit profile</a>
+                            <a href="/profile/edit">
+                              <span class="glyphicon glyphicon-pencil"></span>
+                              Edit profile</a>
                         </li>
                     {% endif %}
                     <li>
-                        <a href="/common/directions">Directions</a>
+                        <a href="/common/directions">
+                          <span class="glyphicon glyphicon-road"></span>
+                          Directions</a>
                     </li>
                     <li>
-                        <a href="/common/list">Establishments</a>
+                        <a href="/common/list">
+                        <span class="glyphicon glyphicon-list"></span>
+                        Establishments</a>
                     </li>
                     <li>
                         <a href="{{ path('fos_user_security_logout') }}">
                             {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                            <span class="glyphicon glyphicon-log-out"></span>
                         </a>
                     </li>
                 {% else %}
@@ -53,7 +62,9 @@
                     </li>
                     <li>
                         <a href="{{ path('fos_user_security_login') }}">
-                            {{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                            {{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+                          <span class="glyphicon glyphicon-log-in"></span></a>
+
                     </li>
                 {% endif %}
             </ul>

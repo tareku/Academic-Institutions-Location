@@ -5,6 +5,7 @@ use AppBundle\Entity\Institution;
 use AppBundle\Entity\Establishment;
 use AppBundle\Entity\Gallery;
 use AppBundle\Entity\Historique;
+use AppBundle\Entity\User;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -90,54 +91,54 @@ class DefaultController extends Controller
                  'form' => $form->createView()
                ));
            }
-
-           /**
-            * @Route("/backend/edit/{id}", name="editpage")
-            */
-           public function editAction($id, Request $request)
-           {
-               $estab = $this->getDoctrine()
-                 ->getRepository('AppBundle:Institution')
-                 ->find($id);
-
-                //  $estab->setName($estab->getName());
-                //  $estab->setType($estab->getType());
-                //  $estab->setAddress($estab->getAddress());
-
-                 $form = $this->createFormBuilder($estab,  array("action" => $this->generateUrl("editpage", array('id' => 'id'))))
-                   ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Institution name')))
-                   ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
-                  //  ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'on-place-changed' => 'vm.placeChanged()', 'places-auto-complete' => 'places-auto-complete')))
-                  //  ->add('Latitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Latitude', 'value' => '{{vm.lat}}')))
-                  //  ->add('Longitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Longitude', 'value' => '{{vm.lng}}')))
-                   ->add('save', SubmitType::class, array('label' => 'Edit Institution', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
-                   ->getForm();
-
-                   $form->handleRequest($request);
-                   if($form->isSubmitted() && $form->isValid()){
-                     //create data
-                     $name = $form['name']->getData();
-                     $type = $form['type']->getData();
-                    //  $address = $form['address']->getData();
-
-                     $em = $this->getDoctrine()->getManager();
-                     $estab = $em->getRepository('AppBundle:Institution')->find($id);
-
-                     $estab->setName($name);
-                     $estab->setType($type);
-                    //  $estab->setAddress($address);
-                     $em->flush();
-                     $this->addFlash(
-                       'notice',
-                       'Institution Edited'
-                     );
-                     return $this->redirectToRoute('listpage');
-                   }
-                 return $this->render('backend/edit.html.twig', array(
-                   'estab' => $estab,
-                   'form' => $form->createView()
-                 ));
-           }
+           //
+          //  /**
+          //   * @Route("/backend/edit/{id}", name="editpage")
+          //   */
+          //  public function editAction($id, Request $request)
+          //  {
+          //      $estab = $this->getDoctrine()
+          //        ->getRepository('AppBundle:Institution')
+          //        ->find($id);
+           //
+          //       //  $estab->setName($estab->getName());
+          //       //  $estab->setType($estab->getType());
+          //       //  $estab->setAddress($estab->getAddress());
+           //
+          //        $form = $this->createFormBuilder($estab,  array("action" => $this->generateUrl("editpage", array('id' => 'id'))))
+          //          ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Institution name')))
+          //          ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
+          //         //  ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'on-place-changed' => 'vm.placeChanged()', 'places-auto-complete' => 'places-auto-complete')))
+          //         //  ->add('Latitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Latitude', 'value' => '{{vm.lat}}')))
+          //         //  ->add('Longitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Longitude', 'value' => '{{vm.lng}}')))
+          //          ->add('save', SubmitType::class, array('label' => 'Edit Institution', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
+          //          ->getForm();
+           //
+          //          $form->handleRequest($request);
+          //          if($form->isSubmitted() && $form->isValid()){
+          //            //create data
+          //            $name = $form['name']->getData();
+          //            $type = $form['type']->getData();
+          //           //  $address = $form['address']->getData();
+           //
+          //            $em = $this->getDoctrine()->getManager();
+          //            $estab = $em->getRepository('AppBundle:Institution')->find($id);
+           //
+          //            $estab->setName($name);
+          //            $estab->setType($type);
+          //           //  $estab->setAddress($address);
+          //            $em->flush();
+          //            $this->addFlash(
+          //              'notice',
+          //              'Institution Edited'
+          //            );
+          //            return $this->redirectToRoute('listpage');
+          //          }
+          //        return $this->render('backend/edit.html.twig', array(
+          //          'estab' => $estab,
+          //          'form' => $form->createView()
+          //        ));
+          //  }
 
 
            /**
@@ -184,6 +185,24 @@ class DefaultController extends Controller
                      );
                      return $this->redirectToRoute('listpage');
                    }
+
+                   $historique = new Historique;
+                   $user = $this->getUser()->getId();
+                   $establishment = $id;
+                   $now = new\DateTime('now');
+
+                   $historique.setUser($user);
+                   $historique.setEstablishment($establishment);
+                   $historique.setDate($now);
+
+                   $em = $this->getDoctrine()->getManager();
+                     $em->persist($historique);
+                     $em->flush();
+
+                     $this->addFlash(
+                       'notice',
+                       'Historique Added'
+                     );
 
 
                  return $this->render('backend/update.html.twig', array(
@@ -270,14 +289,60 @@ class DefaultController extends Controller
      */
     public function detailsAction($id)
     {
+
         $estab = $this->getDoctrine()
           ->getRepository('AppBundle:Institution')
           ->find($id);
 
         return $this->render('common/details.html.twig', array(
-          'estab' => $estab
+          'estab' => $estab,
         ));
     }
+
+    /**
+     * @Route("/common/details/{id}", name="historiquepage")
+     */
+    // public function historiqueAction($id)
+    // {
+      // $historique = new Historique;
+      //   $estab = $this->getDoctrine()
+      //     ->getRepository('AppBundle:Institution')
+      //     ->find($id);
+      //
+      //     $user = $this->getUser()->getId();
+      //     $establishment = $id;
+      //     $now = new\DateTime('now');
+      //
+      //     $historique.setUser($user);
+      //     $historique.setEstablishment($establishment);
+      //     $historique.setDate($now);
+      //
+      //     $em = $this->getDoctrine()->getManager();
+      //       $em->persist($historique);
+      //       $em->flush();
+      //
+      //       $this->addFlash(
+      //         'notice',
+      //         'Historique Added'
+      //       );
+    // }
+
+    /**
+     * @Route("/profile", name="detailspage")
+     */
+    // public function detailsAction($id)
+    // {
+    //     $estab = $this->getDoctrine()
+    //       ->getRepository('AppBundle:Institution')
+    //       ->find($id);
+    //
+    //       $user = $this->getUser()->getId();
+    //
+    //     return $this->render('common/details.html.twig', array(
+    //       'estab' => $estab,
+    //       'user' => $user
+    //     ));
+    // }
 
     /**
    * @Route("/common/directions", name="directionspage")

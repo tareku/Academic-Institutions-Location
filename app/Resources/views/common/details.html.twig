@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <div class="row margin-top-50" ng-app="app" ng-controller="MapCtrl as vm">
-        <h2 class="page-header">{{estab.name}}</h2>
-        <div class="col-md-6">
+        <h2 class="page-header">{{estab.name}} </h2>
+        <div class="col-md-12">
             <div class="">
                 <ul>
                     <li class="list-group-item">
@@ -13,23 +13,19 @@
                         {{estab.address}}</li>
                     <li class="list-group-item">
                         <a href="/common/gallery/{{estab.id}}">
+                            <span class="glyphicon glyphicon-picture"></span>
                             <strong>Gallery</strong>
                         </a>
                     </li>
                 </ul>
             </div>
-            <div class="">
-            </div>
+            <div class=""></div>
         </div>
 
-        <div class="col-md-6">
-            {% verbatim %}
-                <ng-map zoom="{{vm.zoom}}" center="[{{vm.clat}},{{vm.clng}}]" class="height-500">
-                {% endverbatim %}
+        <div class="col-md-12">
+            <ng-map zoom="14" center="{{estab.latitude}},{{estab.longitude}}" class="height-350">
                 <marker position="[{{estab.latitude}},{{estab.longitude}}]" title="{{estab.name}}" animation="Animation.BOUNCE"></marker>
-                {% verbatim %}
-                </ng-map>
-            {% endverbatim %}
+            </ng-map>
         </div>
     </div>
 

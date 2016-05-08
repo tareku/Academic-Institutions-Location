@@ -1,32 +1,27 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <div class="row margin-top-50">
-        <h2 class="page-header">{{estab.name}}</h2>
-        <div class="">
-            {{ form_start(galleryform, {'method': 'POST'}) }}
-            {{ form_widget(galleryform) }}
-            {{ form_end(galleryform, {'render_rest': true}) }}
-        </div>
-        {% verbatim %}
-            <div id="myCarousel" class="carousel slide " data-ride="carousel" data-interval="1000">
-                <div class="carousel-inner" role="listbox">
-                {% endverbatim %}
+        <h2 class="page-header">{{estab.name}}
+            (Gallery)</h2>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {% if app.user.username == "admin" %}
+                <div class="margin-buttom-30">
+                    {{ form_start(galleryform, {'method': 'POST'}) }}
+                    {{ form_widget(galleryform) }}
+                    {{ form_end(galleryform, {'render_rest': true}) }}
+                </div>
+            {% endif %}
+            {% if pictures != null %}
                 {% for picture in pictures %}
-                    <div {% if loop.index == 1 %} class="item active" {% else %} class="item" {% endif %}>
-                        <img src= {{picture.url}} alt=""/>
+                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                        <div class="thumbnail">
+                            <img class="img-responsive" id="imgfound" src="{{picture.url}}" >
+                        </div>
                     </div>
                 {% endfor %}
-                {% verbatim %}
-                </div>
-                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        {% endverbatim %}
+            {% else %}
+                <img id="imgnotfound" src="http://www.vishmax.com/en/innovattive-cms/themes/themax-theme-2015/images/no-image-found.gif" alt=""/>
+            {% endif %}
+        {% endif %}
     </div>
 {% endblock %}

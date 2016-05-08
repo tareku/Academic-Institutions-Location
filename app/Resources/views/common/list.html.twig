@@ -19,11 +19,18 @@
                             <td>{{estab.name}}</td>
                             <td>{{estab.type}}</td>
                             <td>
-                                <a href="/common/details/{{estab.id}}" class="btn btn-success">View</a>
-                                {% if app.user.username == "Tarek Brahim" %}
+                                <a href="/common/details/{{estab.id}}" class="btn btn-success">
+                                  <span class="glyphicon glyphicon-check"></span>
+                                  View</a>
+                                {% if app.user.username == "admin" %}
                                     <!-- <a href="/backend/edit/{{estab.id}}" class="btn btn-default">Edit</a> -->
-                                    <a href="/backend/update/{{estab.id}}" class="btn btn-warning">Update</a>
-                                    <a href="/backend/delete/{{estab.id}}" class="btn btn-danger">Delete</a>
+                                    <a href="/backend/update/{{estab.id}}" class="btn btn-default">
+                                      <span class="glyphicon glyphicon-edit"></span>
+                                      Update</a>
+                                    <a href="/backend/delete/{{estab.id}}" class="btn btn-danger">
+                                      <!-- <span class="glyphicon glyphicon-remove"></span> -->
+                                      <span class="glyphicon glyphicon-trash"></span>
+                                      Delete</a>
                                 {% endif %}
                             </td>
                         </tr>

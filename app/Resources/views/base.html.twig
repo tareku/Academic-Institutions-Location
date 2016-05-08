@@ -11,6 +11,9 @@
         <!-- Bootstrap core CSS -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
+        <!-- Font awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+
         <!-- jquery -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 
@@ -32,6 +35,7 @@
             </div>
             {% block body %}{% endblock %}
         </div>
+
         {% block javascripts %}{% endblock %}
         <script>
             angular.module('app', ['ngMap']).controller('MapCtrl', function(NgMap) {

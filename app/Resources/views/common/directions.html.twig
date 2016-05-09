@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="row margin-top-60" ng-app="app" ng-controller="MapCtrl as vm">
+    <div class="row margin-top-40" ng-app="app" ng-controller="MapCtrl as vm">
+      <h2 class="page-header">Directions</h2>
         <div class="col-md-12">
             <div class="col-md-5">
-                <select ng-model="origin" class="form-control input-lg">
+                <select ng-model="origin" class="form-control input">
                   <option selected="selected" value="">Origin</option>
                     {% for estab in estabs %}
                         <option value="{{estab.latitude}},{{estab.longitude}}">{{estab.name}}</option>
@@ -11,7 +12,7 @@
                 </select>
             </div>
             <div class="col-md-5">
-                <select ng-model="destination"  class="form-control input-lg">
+                <select ng-model="destination"  class="form-control input">
                   <option selected="selected" value="">Destination</option>
                     {% for estab in estabs %}
                         <option value="{{estab.latitude}},{{estab.longitude}}">{{estab.name}}</option>
@@ -19,7 +20,7 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <select ng-model="travelMode" ng-init="travelMode='Travel mode'" class="form-control input-lg">
+                <select ng-model="travelMode" ng-init="travelMode='Travel mode'" class="form-control input">
                   <option selected="selected" value="Travel mode">Travel mode</option>
                     <option value="DRIVING">Driving</option>
                     <option value="WALKING">Walking</option>
@@ -29,7 +30,7 @@
         <div class="col-md-12 margin-top-10">
           <div class="col-md-9">
               {% verbatim %}
-                  <ng-map zoom="{{vm.zoom}}" center="[{{vm.clat}},{{vm.clng}}]" class="height-550">
+                  <ng-map zoom="{{vm.zoom}}" center="[{{vm.clat}},{{vm.clng}}]" class="height-450">
                       <directions draggable="false" panel="directions-panel" travel-mode="{{travelMode}}" origin="{{origin}}" destination="{{destination}}"></directions>
                   </ng-map>
               {% endverbatim %}

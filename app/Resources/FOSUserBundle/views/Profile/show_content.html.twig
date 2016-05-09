@@ -1,6 +1,25 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<div class="fos_user_user_show margin-top-150">
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+<div class="fos_user_user_show margin-top-100">
+  <h2 class="page-header">Historique: {{ user.email }}</h2>
+    <!-- <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
+    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p> -->
+    <div class="">
+      <table class="table">
+          <thead>
+              <tr>
+                  <th>Institution</th>
+                  <th>Visit date</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for historique in historiques %}
+                  <tr>
+                      <td>{{historique.establishment}}</td>
+                      <td><strong>{{historique.date|date('F j, Y, g:i a')}}</strong></td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+    </div>
 </div>

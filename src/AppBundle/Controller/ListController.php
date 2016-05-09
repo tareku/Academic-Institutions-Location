@@ -18,20 +18,19 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class DefaultController extends Controller
+class ListController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/common/list", name="listpage")
      */
-    public function indexAction(Request $request)
+    public function listAction(Request $request)
     {
       $estabs = $this->getDoctrine()
         ->getRepository('AppBundle:Institution')
         ->findAll();
 
-      return $this->render('default/index.html.twig', array(
+      return $this->render('common/list.html.twig', array(
         'estabs' => $estabs,
       ));
     }
-
 }

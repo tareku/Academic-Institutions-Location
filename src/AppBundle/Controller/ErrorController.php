@@ -18,20 +18,13 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class DefaultController extends Controller
+class ErrorController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/error", name="errorpage")
      */
-    public function indexAction(Request $request)
+    public function errorAction(Request $request)
     {
-      $estabs = $this->getDoctrine()
-        ->getRepository('AppBundle:Institution')
-        ->findAll();
-
-      return $this->render('default/index.html.twig', array(
-        'estabs' => $estabs,
-      ));
-    }
-
+      return $this->render('default/error.html.twig');
+    }    
 }

@@ -1,4 +1,7 @@
-Academic-Institutions-Location
+Academic Institutions Location
 ==============================
 
-A Symfony project created on April 19, 2016, 8:36 pm.
+Tarek Ben Brahim MISIE1.
+Contact: tarekbenbrahim1@gmail.com
+
+A Symfony project.

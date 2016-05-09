@@ -19,7 +19,7 @@ security:
                 always_use_default_target_path: true
                 default_target_path:            /
                 use_referer:                    false
-                failure_path:    http://learn.getgrav.org/user/pages/11.troubleshooting/01.page-not-found/error-404.png
+                failure_path:    http://localhost:8000/error                
                 # if you are using Symfony < 2.8, use the following config instead:
                 # csrf_provider: form.csrf_provider
 

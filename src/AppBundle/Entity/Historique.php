@@ -29,9 +29,9 @@ class Historique
     private $user;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="establishment", type="integer")
+     * @ORM\Column(name="establishment", type="string", length=255)
      */
     private $establishment;
 
@@ -80,7 +80,7 @@ class Historique
     /**
      * Set establishment
      *
-     * @param integer $establishment
+     * @param string $establishment
      *
      * @return Historique
      */
@@ -94,7 +94,7 @@ class Historique
     /**
      * Get establishment
      *
-     * @return int
+     * @return string
      */
     public function getEstablishment()
     {

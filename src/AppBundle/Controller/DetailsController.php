@@ -18,20 +18,30 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class DefaultController extends Controller
+class DetailsController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/common/details/{id}", name="detailspage")
      */
-    public function indexAction(Request $request)
+    public function detailsAction($id)
     {
-      $estabs = $this->getDoctrine()
-        ->getRepository('AppBundle:Institution')
-        ->findAll();
+      $estab = $this->getDoctrine()
+      ->getRepository('AppBundle:Institution')
+      ->find($id);
 
-      return $this->render('default/index.html.twig', array(
-        'estabs' => $estabs,
-      ));
+      $now = new\DateTime('now');
+      $user = $this->getUser()->getId();
+      $historique = new Historique;
+      $historique->setUser($user);
+      $historique->setEstablishment($estab->getName());
+      $historique->setDate($now);
+
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($historique);
+      $em->flush();
+
+        return $this->render('common/details.html.twig', array(
+          'estab' => $estab,
+        ));
     }
-
 }

@@ -11,9 +11,6 @@
         <!-- Bootstrap core CSS -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Font awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
-
         <!-- jquery -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 
@@ -29,7 +26,7 @@
         {% include '::topnav.html.twig'%}
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-12 ">
                     {% block fos_user_content %}{% endblock fos_user_content %}
                 </div>
             </div>
@@ -38,7 +35,8 @@
 
         {% block javascripts %}{% endblock %}
         <script>
-            angular.module('app', ['ngMap']).controller('MapCtrl', function(NgMap) {
+            angular.module('app', ['ngMap'])
+            .controller('MapCtrl', function(NgMap) {
                 var vm = this;
                 vm.zoom = 7;
                 vm.clat = 35.1107846;
@@ -57,7 +55,6 @@
                     for (var i = 0; i < context.length; i++) {
                         alert("clicked " + context[i].name);
                     }
-                    // for (var i = 0; i < items.length; i++) {       alert("clicked "+items[i].name|raw); }
                 }
             });
         </script>

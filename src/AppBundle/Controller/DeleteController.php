@@ -18,20 +18,23 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class DefaultController extends Controller
+class DeleteController extends Controller
 {
-    /**
-     * @Route("/", name="homepage")
-     */
-    public function indexAction(Request $request)
-    {
-      $estabs = $this->getDoctrine()
-        ->getRepository('AppBundle:Institution')
-        ->findAll();
+               /**
+                * @Route("/backend/delete/{id}", name="deletepage")
+                */
+               public function deleteAction($id)
+               {
+                 $em = $this->getDoctrine()->getManager();
+                 $estab = $em->getRepository('AppBundle:Institution')->find($id);
 
-      return $this->render('default/index.html.twig', array(
-        'estabs' => $estabs,
-      ));
-    }
+                 $em->remove($estab);
+                 $em->flush();
 
+                 $this->addFlash(
+                   'notice',
+                   'Institution Removed'
+                 );
+                 return $this->redirectToRoute('listpage');
+               }
 }

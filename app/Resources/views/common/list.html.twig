@@ -3,7 +3,6 @@
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         <div class="row margin-top-50" ng-app="app" ng-controller="ListCtrl">
             <h2 class="page-header">Establishments list</h2>
-
             <table class="table">
                 <thead>
                     <tr>
@@ -13,24 +12,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr></tr>
                     {% for estab in estabs %}
                         <tr>
                             <td>{{estab.name}}</td>
-                            <td>{{estab.type}}</td>
+                            <td><strong>{{estab.type}}</strong></td>
                             <td>
                                 <a href="/common/details/{{estab.id}}" class="btn btn-success">
-                                  <span class="glyphicon glyphicon-check"></span>
-                                  View</a>
+                                    <span class="glyphicon glyphicon-check"></span>
+                                    View</a>
                                 {% if app.user.username == "admin" %}
-                                    <!-- <a href="/backend/edit/{{estab.id}}" class="btn btn-default">Edit</a> -->
                                     <a href="/backend/update/{{estab.id}}" class="btn btn-default">
-                                      <span class="glyphicon glyphicon-edit"></span>
-                                      Update</a>
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                        Update</a>
                                     <a href="/backend/delete/{{estab.id}}" class="btn btn-danger">
-                                      <!-- <span class="glyphicon glyphicon-remove"></span> -->
-                                      <span class="glyphicon glyphicon-trash"></span>
-                                      Delete</a>
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                        Delete</a>
                                 {% endif %}
                             </td>
                         </tr>

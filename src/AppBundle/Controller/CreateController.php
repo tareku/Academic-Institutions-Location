@@ -29,7 +29,7 @@ class CreateController extends Controller
 
                $form = $this->createFormBuilder($estab,  array("action" => $this->generateUrl("createpage")))
                  ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'placeholder' => 'Institution name')))
-                 ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
+                 ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement universitaire' => 'Logement universitaire', 'Restaurant universitaire' => 'Restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
                  ->add('address', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'on-place-changed' => 'vm.placeChanged()', 'places-auto-complete' => 'places-auto-complete')))
                  ->add('Latitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'placeholder' => 'Latitude', 'value' => '{{vm.lat}}')))
                  ->add('Longitude', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-30', 'placeholder' => 'Longitude', 'value' => '{{vm.lng}}')))

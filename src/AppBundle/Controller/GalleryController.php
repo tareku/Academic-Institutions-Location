@@ -59,7 +59,7 @@ class GalleryController extends Controller
                        'notice',
                        'Picture Added'
                      );
-                     return $this->redirectToRoute('listpage');
+                     return $this->redirect($request->headers->get('referer'));
                    }
 
                  return $this->render('common/gallery.html.twig', array(

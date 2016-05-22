@@ -31,7 +31,7 @@ class UpdateController extends Controller
 
                  $form = $this->createFormBuilder($estab)
                    ->add('name', TextType::class, array('attr' => array('class' => 'form-control input-lg margin-buttom-10', 'placeholder' => 'Institution name')))
-                   ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement et restaurant universitaire' => 'Logement et restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
+                   ->add('type', ChoiceType::class, array('choices' => array('Faculté' => 'Faculté', 'Logement universitaire' => 'Logement universitaire', 'Restaurant universitaire' => 'Restaurant universitaire', 'Rectorat' => 'Rectorat'),'attr' => array('class' => 'form-control input-lg margin-buttom-30')))
                    ->add('save', SubmitType::class, array('label' => 'Update Institution', 'attr' => array('class' => 'btn btn-primary btn-block btn-lg')))
                    ->getForm();
 

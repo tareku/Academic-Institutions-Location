@@ -29,8 +29,11 @@ class ListController extends Controller
         ->getRepository('AppBundle:Institution')
         ->findAll();
 
+        $data = json_encode($estabs, true);
+
       return $this->render('common/list.html.twig', array(
         'estabs' => $estabs,
+        'data' => $data,
       ));
     }
 }
